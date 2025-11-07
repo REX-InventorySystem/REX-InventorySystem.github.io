@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Inventory System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/setting.js"></script>
+</head>
+<body>
+  <div class="auth">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label>Username
+        <input type="text" id="username" required>
+      </label>
+      <label>Password
+        <input type="password" id="password" required>
+      </label>
+      <button type="submit" class="btn full">Login</button>
+      <p>No account? <a href="register.html">Register</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        localStorage.setItem("currentUser", JSON.stringify({ username }));
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+  </script>
+</body>
+</html>
